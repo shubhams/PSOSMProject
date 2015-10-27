@@ -18,8 +18,9 @@
 	</nav>
 	<div class="jumbotron vertical-center">
 		<div class="container">
-         	<div class="input-group">
-			  <input type="text" class="form-control" placeholder="Reddit Username" aria-describedby="basic-addon2" id="username-input">
+			<img src="{% static 'you/img/dark_snoo.png' %}" style="height:300px;width:300px;margin-right:auto;margin-left:auto;display:block;">
+         	<div class="input-group" style="margin-top:20px;">
+			  <input type="text" class="form-control" placeholder="Reddit Username" aria-describedby="basic-addon2" id="username-input"  onkeypress="return handle_enter(event)">
 			  <span class="input-group-btn">
 		        <button class="btn btn-default" type="button" id="username-input-btn" onclick="return btnusr_onclick()">Go!</button>
 		      </span>

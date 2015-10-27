@@ -12,9 +12,11 @@ def home(request):
 
 def analyse(request,username):
 	username="/u/"+username
+	reddit_user="https://www.reddit.com"+username
 	template = loader.get_template('you/you.html')
 	context = RequestContext(request, {
-		'username':username
+		'username':username,
+		'reddituser': reddit_user
 		})
 
 	return HttpResponse(template.render(context))

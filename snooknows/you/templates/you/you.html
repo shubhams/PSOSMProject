@@ -11,8 +11,11 @@
 	<nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">Snoo Knows</a>
-	      <p class="navbar-text">{{ username }}</p>
+	      <a class="navbar-brand" href="../../">Snoo Knows</a>
+	      <a class="navbar-text" title="View user on Reddit" href={{ reddituser }}>{{ username }}</a>
+	      <a class="navbar-brand" href="../../" style="position: absolute;  right: 0; ">
+	        <img alt="Brand" src="{% static 'you/img/dark_snoo.png' %}" style="height:25px;width:25px;">
+	      </a>
 	    </div>
 	</div>
 	</nav>
