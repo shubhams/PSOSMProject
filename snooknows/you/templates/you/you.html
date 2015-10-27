@@ -6,6 +6,7 @@
    <!-- Bootstrap -->
    <link href="{% static 'you/css/bootstrap.min.css' %}" rel="stylesheet">
    <link rel="stylesheet" type="text/css" href="{% static 'you/css/basic.css' %}">
+
 </head>
 <body style="padding-top: 20px;">
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -19,9 +20,31 @@
 	    </div>
 	</div>
 	</nav>
-	<div class="jumbotron vertical-center">
+	<div class="jumbotron">
 		<div class="container">
-         	
+         	<div class="row">
+		        <div class="col-xs-6">
+		        	<h4>Potentially Vulnerable Information</h6>
+		        		<p style="font-size:small">Based on your public data on Reddit, an attacker can learn the following about you</p>
+		            <!-- fields -->
+		            <div class="row">
+					  <div class="col-sm-3">[Field]</div>
+					  <div class="col-sm-5">[Data]</div>
+					  <div class="col-sm-2">[Links]</div>
+					  <div class="col-sm-2">[Weight]</div>
+					</div>
+		        </div>
+		        <div class="col-xs-6">
+		        	<h4>Your Vulnerability Score</h6>
+        			<p style="font-size:small">After analysing what can be learnt about you, we have assigned you a vulnerability score</p>
+		            <!-- score -->
+		            <div id="score-dial" class="circle" style="margin-right: auto;margin-left: auto;display: block;">
+		            	<strong>
+		            	</strong>
+		            </div>
+		            <p style="font-size:small">The absolute score for your Reddit profile is <b>{{ abs_score }}</b>. This has been calculated using the different weights assigned to each field of information. The weights have been determined using our the observations of our user studies</p>
+		        </div>
+    </div>
 		</div>
 	</div>
 
@@ -29,5 +52,19 @@
 <script src="https://code.jquery.com/jquery.js"></script>
 <script src="{% static 'you/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'you/js/basic.js' %}"></script>
+<script src="{% static 'you/js/circle-progress.js' %}"></script>
+<script>
+    $('#score-dial').circleProgress({
+        value: {{ vul_score }},
+        size: 200,
+        fill: {
+            gradient: ["{{gradient_1}}", "{{gradient_2}}"]
+        }
+    }).on('circle-animation-progress', function(event, progress) {
+    	$(this).find('strong').html(parseInt({{ vul_score}} * 100 * progress) + '<i>%</i>');
+	});
+
+</script>
+
 </body>
 </html>

@@ -5,3 +5,29 @@
   display: flex;
   align-items: center;
 }
+
+.circle {
+    width: 100px;
+    margin: 6px 6px 20px;
+    display: inline-block;
+    position: relative;
+    text-align: center;
+    line-height: 1.2;
+}
+
+
+.circle strong {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 50px;
+}
+
+.circle strong i {
+    font-style: normal;
+    font-size: 0.6em;
+    font-weight: normal;
+}
