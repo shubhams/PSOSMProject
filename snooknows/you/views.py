@@ -31,6 +31,12 @@ def analyse(request,username):
 
 	return HttpResponse(template.render(context))
 
+def getSegments(subredWeights):
+	colours=["#15507a","#5eb1ba","#6ED1DB","#720733","#c9c6b5","#d10061","#e67162","#db601e","#C1E66E","#317564"]
+	hilites=["#1F78B8","6BCCD6","A30B4A","AB0C4D","E8E5D3","E8006C","FC7D6D","FA6E23","43A38B","317564"]
+
+	
+	
 def getColour(score):
 	gradient = {} 
 	gradient["low"]=["#27ae60","#16a085"]

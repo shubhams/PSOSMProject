@@ -7,6 +7,9 @@
    <link href="{% static 'you/css/bootstrap.min.css' %}" rel="stylesheet">
    <link rel="stylesheet" type="text/css" href="{% static 'you/css/basic.css' %}">
 
+	<script src="{% static 'you/js/Chart.min.js' %}"></script>
+	<script src="{% static 'you/js/m_graph.js' %}"></script>
+
 </head>
 <body style="padding-top: 20px;">
 	<nav class="navbar navbar-default navbar-fixed-top">
@@ -44,7 +47,29 @@
 		            </div>
 		            <p style="font-size:small">The absolute score for your Reddit profile is <b>{{ abs_score }}</b>. This has been calculated using the different weights assigned to each field of information. The weights have been determined using our the observations of our user studies</p>
 		        </div>
-    </div>
+    		</div>
+
+    		<div class="row" style="margin-top:5%">
+    			<h4>Subreddit-wise Vulnerability Distribution</h4>
+    			<canvas id="subredChart" width="400" height="400" style="margin-right: auto;margin-left: auto;display: block;"></canvas>
+    			<div id="subredLegend"></div>
+    			 <p style="font-size:small;margin-top:5%">Hover over the chart segments to learn which on which subreddit you're revealing maximum information</p>
+    			<script type="text/javascript">
+    				data=[]
+    				renderDonutGraph("subredChart",data)
+    			</script>
+    		</div>
+
+    		<div class="row" style="margin-top:5%">
+    			<h4>Minimum Vulnerable Combination</h4>
+    			<canvas id="subredChart" width="400" height="400" style="margin-right: auto;margin-left: auto;display: block;"></canvas>
+    			<div id="subredLegend"></div>
+    			 <p style="font-size:small;margin-top:5%">Combining what we know of you and data from our research we represent a visulaisation. This tells us what percentage of people feel a particular combination of information, in the hands of an attacker can threaten them</p>
+    			<script type="text/javascript">
+    				data=[]
+    				// renderDonutGraph("subredChart",data)
+    			</script>
+    		</div>
 		</div>
 	</div>
 
