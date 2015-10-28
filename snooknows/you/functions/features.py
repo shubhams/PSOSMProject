@@ -73,6 +73,7 @@ def textAnalysis(text, dictOfComments):
             seen.add(entity.id)
             for entity_type in entity.freebase_types:
                 entity_text = entity.matched_text
+                print entity_text
                 if((entity_type in freebase_cityList)):
                     if(entity.relevance_score>=0.2):
                         userPlacesDict.update(getEntityCommentDictionary(entity_text, dictOfComments))
@@ -216,10 +217,11 @@ def process(username):
     userAnalysisDict["What you like to Discuss"] = userTopicsDict
     userAnalysisDict["Your interests"] = userInterestsDict
     filename = username + '_analysis.json'
-    f = open(filename, 'w')
-    json.dump(userAnalysisDict, f)
-    f.close()
-    return filename
+    # f = open(filename, 'w')
+    # json.dump(userAnalysisDict, f)
+    # f.close()
+    return json.dumps(userAnalysisDict)
+    
 
 if __name__ == '__main__':
     print process('maxwellhill')
