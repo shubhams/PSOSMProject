@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 import functions.features as feat
+from you.functions.scorecalculator import getUserFeatureScore
 # Create your views here.
 
 def home(request):
@@ -17,12 +18,6 @@ def analyse(request,username):
 	username="/u/"+username
 	reddit_user="https://www.reddit.com"+username
 	template = loader.get_template('you/you.html')
-	
-	### score
-	vul_score=0.45
-	grad=getColour(vul_score)
-	max_score=47.05
-	abs_score=41
 
 	### subreds distribution
 	subredData=getSegments({})
@@ -34,6 +29,13 @@ def analyse(request,username):
 	print "Analysing data of: "+usr
 	userAnJSON=feat.process(usr)
 	fields_items=getFields(userAnJSON)
+	
+	### score
+	ret_score = getUserFeatureScore(userAnJSON)
+	vul_score= ret_score["percent_score"]
+	grad=getColour(vul_score)
+	max_score=47.05
+	abs_score=ret_score["user_score"]
 
 	context = RequestContext(request, {
 		'username':username,
