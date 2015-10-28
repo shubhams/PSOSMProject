@@ -81,7 +81,7 @@ def textAnalysis(text, dictOfComments):
                 entity_text = entity.matched_text
                 print entity_text
                 if((entity_type in freebase_cityList)):
-                    if(entity.relevance_score>=0.5):
+                    if(entity.relevance_score>=0.3):
                         userPlacesDict.update(getEntityCommentDictionary(entity_text, dictOfComments))
                 if((entity_type in freebase_religionList)):
                     if(entity.relevance_score>=0.2):
