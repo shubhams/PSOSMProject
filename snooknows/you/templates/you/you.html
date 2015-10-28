@@ -30,14 +30,14 @@
 		        	<h4>Potentially Vulnerable Information</h6>
 		        		<p style="font-size:small">Based on your public data on Reddit, an attacker can learn the following about you</p>
 		            <!-- fields -->
-		            <div class="row">
+		            <!-- <div class="row">
 					  <div class="col-sm-4">[Field]</div>
 					  <div class="col-sm-6">[Data]</div>
 					  <div class="col-sm-2">[Links]</div>
-					</div>
+					</div> -->
 					{% for field in fields_items %}
 					<div class="row">
-					  <div class="col-sm-4">{{ field.name }}</div>
+					  <div class="col-sm-4"><b>{{ field.name }}</b></div>
 					  <div class="col-sm-6">{% autoescape off %}{{ field.values }}{% endautoescape %}</div>
 					  <div class="col-sm-2">{% autoescape off %}{{ field.links }}{% endautoescape %}</div>
 					</div>
