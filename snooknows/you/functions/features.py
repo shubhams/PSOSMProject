@@ -80,7 +80,7 @@ def textAnalysis(text, dictOfComments):
             for entity_type in entity.freebase_types:
                 entity_text = entity.matched_text
                 if((entity_type in freebase_cityList)):
-                    if(entity.relevance_score>=0.2):
+                    if(entity.relevance_score>=0.5):
                         userPlacesDict.update(getEntityCommentDictionary(entity_text, dictOfComments))
                 if((entity_type in freebase_religionList)):
                     if(entity.relevance_score>=0.2):
@@ -89,7 +89,7 @@ def textAnalysis(text, dictOfComments):
                         if(entity.relevance_score>=0.2):
                             userSexDict.update(getEntityCommentDictionary(entity_text, dictOfComments))
                 if((entity_type in freebase_interestList) and (entity_text not in userHobbiesDict.values())):
-                    if(entity.relevance_score>=0.3):
+                    if(entity.relevance_score>=0.4):
                         userHobbiesDict.update(getEntityCommentDictionary(entity_text, dictOfComments))
                 if((entity_type in freebase_animalList) and (entity_text not in userAnimalsDict.values())):
                     if(entity.relevance_score>=0.2):
