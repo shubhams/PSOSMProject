@@ -31,11 +31,17 @@
 		        		<p style="font-size:small">Based on your public data on Reddit, an attacker can learn the following about you</p>
 		            <!-- fields -->
 		            <div class="row">
-					  <div class="col-sm-3">[Field]</div>
-					  <div class="col-sm-5">[Data]</div>
+					  <div class="col-sm-4">[Field]</div>
+					  <div class="col-sm-6">[Data]</div>
 					  <div class="col-sm-2">[Links]</div>
-					  <div class="col-sm-2">[Weight]</div>
 					</div>
+					{% for field in fields_items %}
+					<div class="row">
+					  <div class="col-sm-4">{{ field.name }}</div>
+					  <div class="col-sm-6">{% autoescape off %}{{ field.values }}{% endautoescape %}</div>
+					  <div class="col-sm-2">{% autoescape off %}{{ field.links }}{% endautoescape %}</div>
+					</div>
+					{% endfor %}
 		        </div>
 		        <div class="col-xs-6">
 		        	<h4>Your Vulnerability Score</h6>
@@ -53,7 +59,7 @@
     			<h4>Subreddit-wise Vulnerability Distribution</h4>
     			<canvas id="subredChart" width="400" height="400" style="margin-right: auto;margin-left: auto;display: block;"></canvas>
     			<div id="subredLegend"></div>
-    			 <p style="font-size:small;margin-top:5%">Hover over the chart segments to learn which on which subreddit you're revealing maximum information</p>
+    			 <p style="font-size:small;margin-top:5%">Hover over the chart segments to learn which on which <b>subreddit you're revealing maximum information</b></p>
     			<script type="text/javascript">
     				data= {{ subred_data }}
     				renderDonutGraph("subredChart",data)
