@@ -21,7 +21,9 @@ userFamilyDict = {}
 userTopicsDict = {}
 userInterestsDict = {}
 userRelationsDict = {}
-placeResidenceList=[]
+placeResidenceList = []
+
+permaLinkCache = {}
 
 def getDataFromFile(userName):
     f = codecs.open(userName+'.txt','r','utf-8')
@@ -29,7 +31,11 @@ def getDataFromFile(userName):
     return json.loads(text)
 
 def getPermalink(obj):
-    return obj.permalink
+    if obj in permaLinkCache.keys():
+        return permaLinkCache[obj]
+    else:
+        permaLinkCache[obj] = obj.permalink
+        return permaLinkCache[obj]
 
 def getEntityCommentDictionary(entity, dict_of_comments):
     dict = {}
@@ -216,6 +222,8 @@ def process(username):
     userAnalysisDict["Your Relationships"] = userRelationsDict
     userAnalysisDict["What you like to Discuss"] = userTopicsDict
     userAnalysisDict["Your interests"] = userInterestsDict
+    userAnalysisDict["Religious Beliefs"] = userReligionDict
+
     filename = username + '_analysis.json'
     # f = open(filename, 'w')
     # json.dump(userAnalysisDict, f)
