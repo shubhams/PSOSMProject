@@ -63,8 +63,8 @@ function renderBarGraph(div_id,dat,labs){
 	var ctx = document.getElementById(div_id).getContext("2d");
 
 	var data = {
-    labels: ['January', "February", "March", "April", "May", "June", "July"],
-    // labels: labs,
+    // labels: ['January', "February", "March", "April", "May", "June", "July"],
+    labels: labs,
     datasets: [
         {
             label: "My First dataset",
@@ -72,8 +72,8 @@ function renderBarGraph(div_id,dat,labs){
             strokeColor: "rgba(220,220,220,0.8)",
             highlightFill: "#AB0C4D",
             highlightStroke: "rgba(220,220,220,1)",
-            data: [65, 59, 80, 81, 56, 55, 40],
-            // data: dat
+            // data: [65, 59, 80, 81, 56, 55, 40],
+            data: dat
         }
         ]
 	};

@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 import functions.features as feat
-from you.functions.scorecalculator import getUserFeatureScore
+from you.functions.scorecalculator import getUserFeatureScore,getMatchingCombinations
 # Create your views here.
 
 def home(request):
@@ -22,9 +22,6 @@ def analyse(request,username):
 	### subreds distribution
 	subredData=getSegments({})
 
-	### combos
-	(comboData,comboLabels)=getBars({})
-
 	### fields json
 	print "Analysing data of: "+usr
 	userAnJSON=feat.process(usr)
@@ -36,6 +33,17 @@ def analyse(request,username):
 	grad=getColour(vul_score)
 	max_score=47.05
 	abs_score=ret_score["user_score"]
+
+	### combos
+	combo_dict=getMatchingCombinations(userAnJSON)
+
+	new_combo_dict={}
+	for key in combo_dict.keys():
+		if combo_dict[key]>=0.1:
+			new_combo_dict[key]=combo_dict[key]
+
+	(comboData,comboLabels)=getBars(new_combo_dict)
+
 
 	context = RequestContext(request, {
 		'username':username,
@@ -60,10 +68,10 @@ def getSegments(subredWeights):
 	data_str="[\n"
 	for key in subredWeights.keys():
 		datum="{\n"
-		datum+="value : "+str(subredWeights(key))+",\n"
-		datum+="color : '"+colours[i]+"',\n"
-		datum+="highlight : '"+hilites[i]+"',\n"
-		datum+="label : '"+key+"',\n"
+		datum+="value : "+str(subredWeights[key])+",\n"
+		datum+="color : \'"+colours[i]+"\',\n"
+		datum+="highlight : \'"+hilites[i]+"\',\n"
+		datum+="label : \'"+key+"\',\n"
 		datum+="},\n"
 		count+=1
 		data_str+datum
@@ -76,9 +84,16 @@ def getBars(comboDict):
 	labels_str="["
 	data_str="["
 
+	labels_list=[]
+	data_list=[]
+
 	for key in comboDict.keys():
-		labels_str+="'"+key+"',"
-		data_str+=str(comboDict(key))+","
+		labels_str+="\x22"+key+"\x22 ,"
+		data_str+=str(comboDict[key])+","
+
+	for key in comboDict.keys():
+		labels_list.append(key)
+		data_list.append(comboDict[key])
 
 	labels_str+="]"
 	data_str+="]"

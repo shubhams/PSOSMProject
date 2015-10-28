@@ -1,4 +1,3 @@
-from cv2 import getNumberOfCPUs
 import pandas as pd
 import math
 import itertools
@@ -17,7 +16,7 @@ def getFeatureScores():
             'Pets you Own': 'Your Pets',
             'Your Hobbies/Interests/Fetishes': 'Hobbies/Interest/Fetishes'}
 
-    filepath = 'AnonymousDataSensitivity_Responses.tsv'
+    filepath = 'you/functions/AnonymousDataSensitivity_Responses.tsv'
     df = pd.DataFrame.from_csv(filepath, sep='\t')
 
     i = 0
@@ -42,7 +41,7 @@ def getFeatureScores():
     return feat_scores
 
 def getCombos():
-    filepath = 'AnonymousDataSensitivity_Responses.tsv'
+    filepath = 'you/functions/AnonymousDataSensitivity_Responses.tsv'
     df = pd.DataFrame.from_csv(filepath, sep='\t')
     separator = ', '
     series = df[df.columns[10]]
@@ -110,7 +109,8 @@ def tupleToString(tuple):
             string += tuple[i] + ','
     return string
 
-def getMatchingCombinations(features):
+def getMatchingCombinations(s):
+    features=getFeaturesFromJSON(s)
     combo_counter = getCombos()
     features.sort()
     # print features
@@ -164,6 +164,7 @@ def getUserFeatureScore(string):
     return score
 
 if __name__ == '__main__':
+    print ""
     # filepath = 'AnonymousDataSensitivity_Responses.tsv'
     # df = pd.DataFrame.from_csv(filepath, sep='\t')
     # pprint(getUserFeatureScore(string))

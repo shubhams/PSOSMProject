@@ -11,7 +11,7 @@ def extractComments(userName):
     user = r.get_redditor(userName)
 
     ### Set limit = None to get all the comments
-    comments = user.get_comments(limit=300)
+    comments = user.get_comments(limit=100)
     commentsDict = {}
     for thing in comments:
         if thing.body:

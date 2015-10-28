@@ -72,8 +72,8 @@
     			<div id="subredLegend"></div>
     			 <p style="font-size:small;margin-top:5%">Analysing the possible combinations of infromation an attacker can retrieve from your profile and data from our research we present a visulaisation. This tells you what <b>percentage of people</b> feel a particular combination of information, in the hands of an attacker, is the <b>minimum amount of info</b> needed for them to feel threatened.</p>
     			<script type="text/javascript">
-    				data={{ combo_data }}
-    				labels={{ combo_labels }}
+    				data={% autoescape off %}{{ combo_data }}{% endautoescape %}
+    				labels={% autoescape off %}{{ combo_labels }}{% endautoescape %}
     				renderBarGraph("comboChart",data,labels)
     			</script>
     		</div>
