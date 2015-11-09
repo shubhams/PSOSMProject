@@ -169,6 +169,7 @@ def getSubreddit(text):
                 ind1 = text.index("/r/")+3
         except Exception, e:
                 print "No reddit string found"
+                return "#"
 
         newUrl = text[ind1:]
 
