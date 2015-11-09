@@ -59,7 +59,7 @@
     			<h4>Subreddit-wise Vulnerability Distribution</h4>
     			<canvas id="subredChart" width="400" height="400" style="margin-right: auto;margin-left: auto;display: block;"></canvas>
     			<div id="subredLegend"></div>
-    			 <p style="font-size:small;margin-top:5%">Hover over the chart segments to learn which on which <b>subreddit you're revealing maximum information</b></p>
+    			 <p style="font-size:small;margin-top:5%">Hover over the chart segments to learn what <b> percent of information is leaked from which subreddit</b></p>
     			<script type="text/javascript">
     				data= {% autoescape off %}{{ subred_data }}{% endautoescape %}
     				renderDonutGraph("subredChart",data)
