@@ -39,6 +39,7 @@ def getPermalink(obj):
 
 def getEntityCommentDictionary(entity, dict_of_comments):
     dict = {}
+    entity = " "+entity+" "
     # print "The entity to be matched is : " + entity
     for key in dict_of_comments.keys():
         if entity in dict_of_comments[key]:
@@ -151,11 +152,15 @@ def textAnalysis(text, dictOfComments):
     userRelationsDict = func(userRelationsDict)
 
     family_list=["wife","husband","son","daughter","girlfriend","boyfriend","mom","dad","parents","mother","father","brother","sister","mum","pop","grandad","gram","granny","grandma","grandpa"]
+    aux_list=["my","My"]
+    #print response.noun_phrases()
     for phrase in response.noun_phrases():
         for word in phrase.words:
-            if((word.token in family_list) and (word.token not in userResidenceDict)):
-                userFamilyDict.update(getEntityCommentDictionary(word.token, dictOfComments))
-
+            ##print word.token
+            if(word.token in aux_list):
+                for fam_word in phrase.words:
+                    if((fam_word.token in family_list) and (fam_word.token not in userResidenceDict)):
+                        userFamilyDict.update(getEntityCommentDictionary(fam_word.token, dictOfComments))
     # print "User Family"
     # pprint(userFamilyDict)
     userFamilyDict = func(userFamilyDict)
