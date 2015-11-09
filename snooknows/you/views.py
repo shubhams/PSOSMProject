@@ -68,16 +68,19 @@ def getSegments(subredWeights):
 
 	i=0
 	data_list=[]
-	for key in subredWeights.keys():
+
+	subredW=sorted(subredWeights.items(), key=lambda x: (-x[1], x[0]))
+
+	for sub in subredW:
 		datum={}
-		datum["value"]=str(int(subredWeights[key]))
+		datum["value"]=str(int(sub[1]))
 		if i>9:
 			datum["color"] = colours[(i%10)+1]
 			datum["highlight"] = hilites[(i%10)+1]
 		else:
 			datum["color"]=colours[i]
 			datum["highlight"]=hilites[i]
-		datum["label"]="r/"+key.encode('utf8')
+		datum["label"]="r/"+sub[0].encode('utf8')
 		i+=1
 		data_list.append(datum)
 
