@@ -35,7 +35,8 @@ def analyse(request,username):
 	combo_dict=getMatchingCombinations(userAnJSON)
 
 	### subreds distribution
-	subredData= getPercentage(userAnJSON)
+	subredPercs= getPercentage(userAnJSON)
+	subredData=getSegments(subredPercs)
 
 	new_combo_dict={}
 	for key in combo_dict.keys():
@@ -62,24 +63,21 @@ def analyse(request,username):
 	return HttpResponse(template.render(context))
 
 def getSegments(subredWeights):
-	colours=["#15507a","#5eb1ba","#6ED1DB","#720733","#c9c6b5","#d10061","#e67162","#db601e","#C1E66E","#317564"]
-	hilites=["#1F78B8","#6BCCD6","#A30B4A","#AB0C4D","#E8E5D3","#E8006C","#FC7D6D","#FA6E23","#43A38B","#317564"]
+	colours=["#BF0000","#E03800","#E38400","#E6AC00","#DED600","#B1DE00","#7BD900","#32BA00","#00AB0E","#00965A"]
+	hilites=["#E03838","#E36E46","#E6A853","#E0C060","#DEDA62","#BFDB4F","#A1D959","#6AAD51","#5AA360","#56967D"]
 
 	i=0
-	data_str="[\n"
+	data_list=[]
 	for key in subredWeights.keys():
-		datum="{\n"
-		datum+="value : "+str(subredWeights[key])+",\n"
-		datum+="color : \'"+colours[i]+"\',\n"
-		datum+="highlight : \'"+hilites[i]+"\',\n"
-		datum+="label : \'"+key+"\',\n"
-		datum+="},\n"
-		count+=1
-		data_str+datum
+		datum={}
+		datum["value"]=str(int(subredWeights[key]))
+		datum["color"]=colours[i]
+		datum["highlight"]=hilites[i]
+		datum["label"]="r/"+key.encode('utf8')
+		i+=1
+		data_list.append(datum)
 
-	data_str+="]"
-
-	return data_str
+	return data_list
 
 def getBars(comboDict):
 	labels_str="["
