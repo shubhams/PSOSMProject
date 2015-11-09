@@ -5,6 +5,7 @@
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <!-- Bootstrap -->
    <link href="{% static 'you/css/bootstrap.min.css' %}" rel="stylesheet">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
    <link rel="stylesheet" type="text/css" href="{% static 'you/css/basic.css' %}">
 
 	<script src="{% static 'you/js/Chart.min.js' %}"></script>
@@ -38,8 +39,8 @@
 					{% for field in fields_items %}
 					<div class="row">
 					  <div class="col-sm-4"><b>{{ field.name }}</b></div>
-					  <div class="col-sm-6">{% autoescape off %}{{ field.values }}{% endautoescape %}</div>
-					  <div class="col-sm-2">{% autoescape off %}{{ field.links }}{% endautoescape %}</div>
+					  <div class="col-sm-4">{% autoescape off %}{{ field.values }}{% endautoescape %}</div>
+					  <div class="col-sm-4">{% autoescape off %}{{ field.links }}{% endautoescape %}</div>
 					</div>
 					{% endfor %}
 		        </div>

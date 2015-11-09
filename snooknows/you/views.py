@@ -132,7 +132,7 @@ def getFields(fields_json):
 			for href in datum[k]:
 				if href=="":
 					continue
-				links+='<a href="'+href+'">#</a>'
+				links+='<a href="'+href+'" target="_blank"><i class="fa fa-external-link-square"></i> </a>'
 			links+='</li>\n'
 		values+="</ul>"
 		links+="</ul>"
