@@ -61,7 +61,7 @@
     			<div id="subredLegend"></div>
     			 <p style="font-size:small;margin-top:5%">Hover over the chart segments to learn which on which <b>subreddit you're revealing maximum information</b></p>
     			<script type="text/javascript">
-    				data= {{ subred_data }}
+    				data= {% autoescape off %}{{ subred_data }}{% endautoescape %}
     				renderDonutGraph("subredChart",data)
     			</script>
     		</div>

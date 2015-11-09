@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import RequestContext, loader
 import functions.features as feat
-from you.functions.scorecalculator import getUserFeatureScore,getMatchingCombinations
+from you.functions.scorecalculator import getUserFeatureScore,getMatchingCombinations, getPercentage
 # Create your views here.
 
 def home(request):
@@ -18,9 +18,6 @@ def analyse(request,username):
 	username="/u/"+username
 	reddit_user="https://www.reddit.com"+username
 	template = loader.get_template('you/you.html')
-
-	### subreds distribution
-	subredData=getSegments({})
 
 	### fields json
 	print "Analysing data of: "+usr
@@ -37,12 +34,16 @@ def analyse(request,username):
 	### combos
 	combo_dict=getMatchingCombinations(userAnJSON)
 
+	### subreds distribution
+	subredData= getPercentage(userAnJSON)
+
 	new_combo_dict={}
 	for key in combo_dict.keys():
 		if combo_dict[key]>=0.1:
 			new_combo_dict[key]=combo_dict[key]
 
 	(comboData,comboLabels)=getBars(new_combo_dict)
+
 
 
 	context = RequestContext(request, {

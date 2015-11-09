@@ -163,6 +163,49 @@ def getUserFeatureScore(string):
     score['percent_score'] = percent_score
     return score
 
+
+def getSubreddit(text):
+        try:
+                ind1 = text.index("/r/")+3
+        except Exception, e:
+                print "No reddit string found"
+
+        newUrl = text[ind1:]
+
+        try:
+                ind2 = newUrl.index("/")
+        except Exception, e:
+                print "No slash string found"
+        return newUrl[:ind2]
+
+
+def getPercentage(jsonStr):
+        percentageDict = {}
+        listOfComments = json.loads(jsonStr)
+        listOfDicts = []
+        listOfDicts.append(listOfComments["Sexual Orientation"])
+        listOfDicts.append(listOfComments["Hobbies/Interest/Fetishes"])
+        listOfDicts.append(listOfComments["What you like to Discuss"])
+        listOfDicts.append(listOfComments["Your interests"])
+        listOfDicts.append(listOfComments["Your Relationships"])
+        listOfDicts.append(listOfComments["Where you Live"])
+        listOfDicts.append(listOfComments["Your Pets"])
+        listOfDicts.append(listOfComments["Places of Interest"])
+        listOfDicts.append(listOfComments["Your Family Members"])
+        listOfDicts.append(listOfComments["Religious Beliefs"])
+        bigList = []
+        uniqueSet = set()
+        for item in listOfDicts:
+                if len(item)>0:
+                        for l in item.values():
+                                for x in l:
+                                        bigList.append(getSubreddit(x))
+        for item in bigList:
+                uniqueSet.add(item)
+        for unique in uniqueSet:
+                percentageDict[unique] = (bigList.count(unique)/float(len(bigList))) * 100
+        return percentageDict
+
 if __name__ == '__main__':
     print ""
     # filepath = 'AnonymousDataSensitivity_Responses.tsv'
