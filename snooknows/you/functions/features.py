@@ -59,6 +59,17 @@ def textAnalysis(text, dictOfComments):
     global userRelationsDict
     global ctr
 
+    userPlacesDict = {}
+    userReligionDict = {}
+    userSexDict = {}
+    userHobbiesDict = {}
+    userAnimalsDict = {}
+    userResidenceDict = {}
+    userFamilyDict = {}
+    userTopicsDict = {}
+    userInterestsDict = {}
+    userRelationsDict = {}
+
     # textrazor.api_key = "3f25b580908bee88bf94d9b3b6e8a55040508f5b9a3e8e97dc0e8176"
     textrazor.api_key = "0f99a100cf14a59f52e0ef1b626b9d3d751f27c80e033b35cd1d5ce9"
     client=textrazor.TextRazor(extractors=["entities", "topics","entailments","relations","phrases","words"])
@@ -145,7 +156,7 @@ def textAnalysis(text, dictOfComments):
                 userFamilyDict.update(getEntityCommentDictionary(word.token, dictOfComments))
 
     # print "User Family"
-    # pprint(userFamilyDict)
+    pprint(userFamilyDict)
     userFamilyDict = func(userFamilyDict)
 
     relationship_list=["gf","bf","girlfriend","boyfriend"]
@@ -181,9 +192,10 @@ def textAnalysis(text, dictOfComments):
     # pprint(userInterestsDict)
     # userInterestsDict = func(userInterestsDict)
 
-def func(dict):
+def func(dictum):
     key_set = set()
-    for value in dict.values():
+    print dictum
+    for value in dictum.values():
         key_set.add(value)
 
     updated_dict = {}
@@ -191,8 +203,8 @@ def func(dict):
         updated_dict[key] = []
 
     for key in updated_dict.keys():
-        for id in dict.keys():
-            if key == dict[id]:
+        for id in dictum.keys():
+            if key == dictum[id]:
                 # print key
                 array = updated_dict[key]
                 list = []
