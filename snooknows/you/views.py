@@ -63,16 +63,20 @@ def analyse(request,username):
 	return HttpResponse(template.render(context))
 
 def getSegments(subredWeights):
-	colours=["#BF0000","#E03800","#E38400","#E6AC00","#DED600","#B1DE00","#7BD900","#32BA00","#00AB0E","#00965A"]
-	hilites=["#E03838","#E36E46","#E6A853","#E0C060","#DEDA62","#BFDB4F","#A1D959","#6AAD51","#5AA360","#56967D"]
+	colours=["#BF0000","#E03800","#E38400","#E6AC00","#DED600","#B1DE00","#7BD900","#32BA00","#1D9127","#00965A"]
+	hilites=["#E03838","#E36E46","#E6A853","#E0C060","#DEDA62","#BFDB4F","#A1D959","#6AAD51","#51B859","#56967D"]
 
 	i=0
 	data_list=[]
 	for key in subredWeights.keys():
 		datum={}
 		datum["value"]=str(int(subredWeights[key]))
-		datum["color"]=colours[i]
-		datum["highlight"]=hilites[i]
+		if i>9:
+			datum["color"] = colours[(i%10)+1]
+			datum["highlight"] = hilites[(i%10)+1]
+		else:
+			datum["color"]=colours[i]
+			datum["highlight"]=hilites[i]
 		datum["label"]="r/"+key.encode('utf8')
 		i+=1
 		data_list.append(datum)

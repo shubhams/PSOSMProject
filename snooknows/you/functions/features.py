@@ -32,7 +32,10 @@ def getDataFromFile(userName):
 
 def getPermalink(obj):
     if obj in permaLinkCache.keys():
-        return permaLinkCache[obj]
+        try:
+            return permaLinkCache[obj]
+        except Exception:
+            return "#"
     else:
         permaLinkCache[obj] = obj.permalink
         return permaLinkCache[obj]
