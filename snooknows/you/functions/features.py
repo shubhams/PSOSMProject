@@ -1,7 +1,7 @@
 import textrazor
 from array import array
 import re
-from nltk.corpus import stopwords
+from nltk.corpus import stopwords, wordnet as wn
 import codecs
 from pprint import pprint
 import json
@@ -35,18 +35,18 @@ def getPermalink(obj):
         try:
             return permaLinkCache[obj]
         except Exception:
-            return "#"
+            return ""
     else:
         permaLinkCache[obj] = obj.permalink
         return permaLinkCache[obj]
 
 def getEntityCommentDictionary(entity, dict_of_comments):
     dict = {}
-    entity = " "+entity+" "
-    # print "The entity to be matched is : " + entity
+    print "The entity to be matched is : " + entity
     for key in dict_of_comments.keys():
-        if entity in dict_of_comments[key]:
-            # print entity + " found in  " + dict_of_comments[key]
+        present = re.search(r'\b' + entity + r'\b', dict_of_comments[key])
+        if present is not None:
+            print entity + " found in  " + dict_of_comments[key]
             dict[getPermalink(key)] = entity
     return dict
 
@@ -75,8 +75,8 @@ def textAnalysis(text, dictOfComments):
     userRelationsDict = {}
     # permaLinkCache = {}
 
-    # textrazor.api_key = "3f25b580908bee88bf94d9b3b6e8a55040508f5b9a3e8e97dc0e8176"
-    textrazor.api_key = "0f99a100cf14a59f52e0ef1b626b9d3d751f27c80e033b35cd1d5ce9"
+    textrazor.api_key = "3f25b580908bee88bf94d9b3b6e8a55040508f5b9a3e8e97dc0e8176"
+    #textrazor.api_key = "0f99a100cf14a59f52e0ef1b626b9d3d751f27c80e033b35cd1d5ce9"
     client=textrazor.TextRazor(extractors=["entities", "topics","entailments","relations","phrases","words"])
 
     response = client.analyze(text)
@@ -129,7 +129,17 @@ def textAnalysis(text, dictOfComments):
     # print "User animal dict"
     # pprint(userAnimalsDict)
 
-    residence_list=["live","lived","living","residing","resided"]
+    residence_list=[]
+    for synset in wn.synsets('live'):
+        for lemma in synset.lemmas():
+            #print lemma.name()
+            if(lemma.name() not in residence_list):
+                residence_list.append(lemma.name())
+
+
+    #print "this is the list"
+    print residence_list
+    #residence_list=["live","lived","living","residing","resided"]
     source_words=text.split(" ")
     filtered_words = [w for w in source_words if w not in stopwords.words('english')]
     for words in filtered_words:
@@ -152,28 +162,29 @@ def textAnalysis(text, dictOfComments):
 
     # print "User Residence"
     # pprint(userResidenceDict)
-    userRelationsDict = func(userRelationsDict)
 
-    family_list=["wife","husband","son","daughter","girlfriend","boyfriend","mom","dad","parents","mother","father","brother","sister","mum","pop","grandad","gram","granny","grandma","grandpa"]
+    family_list=["aunt","uncle","auntie","aunty","nephew","niece","wife","husband","son","daughter","fiance","fiancee","girlfriend","boyfriend","mom","dad","parents","mother","father","brother","sister","mum","pop","grandad","gram","granny","grandma","grandpa"]
+
     aux_list=["my","My"]
     #print response.noun_phrases()
     for phrase in response.noun_phrases():
         for word in phrase.words:
             ##print word.token
             if(word.token in aux_list):
-                for fam_word in phrase.words:
-                    if((fam_word.token in family_list) and (fam_word.token not in userResidenceDict)):
-                        userFamilyDict.update(getEntityCommentDictionary(fam_word.token, dictOfComments))
-    # print "User Family"
-    # pprint(userFamilyDict)
+              for fam_word in phrase.words:
+                if((fam_word.token in family_list) and (fam_word.token not in userResidenceDict)):
+                    userFamilyDict.update(getEntityCommentDictionary(fam_word.token, dictOfComments))
+
     userFamilyDict = func(userFamilyDict)
 
-    relationship_list=["gf","bf","girlfriend","boyfriend"]
+    # print "User Family"
+    # pprint(userFamilyDict)
+
+    relationship_list=["gf","bf","girlfriend","boyfriend","babe","bae"]
     for phrase in response.noun_phrases():
         for word in phrase.words:
             if word.token in relationship_list:
                 userRelationsDict.update(getEntityCommentDictionary(word.token, dictOfComments))
-
     # print "User Relations"
     # pprint(userRelationsDict)
     userRelationsDict = func(userRelationsDict)
